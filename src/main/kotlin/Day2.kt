@@ -7,8 +7,8 @@ fun main(args: Array<String>) {
     val result1 = day2FirstStar(input)
     println("Result first star = $result1")
 
-//    val result2 = day2SecondStar(input)
-//    println("Result second star = $result2")
+    val result2 = day2SecondStar(input)
+    println("Result second star = $result2")
 }
 
 
@@ -42,19 +42,47 @@ private data class LetterCounter(val twoLetterCount: Int, val threeLetterCounter
     }
 }
 
-//fun day2SecondStar(input: List<Int>): Int {
-//    val frequencyReached: MutableMap<Int, Int> = mutableMapOf()
-//    var frequency: Int = 0
-//
-//    while (true) {
-//        for (change in input) {
-//            frequency += change
-//            val reached = frequencyReached.getOrDefault(frequency, 0)
-//            if (reached == 1) {
-//                return frequency
-//            } else {
-//                frequencyReached[frequency] = reached + 1
-//            }
-//        }
-//    }
-//}
+fun day2SecondStar(input: List<String>): String {
+    val (s, s1) = input.groupBy { string -> string.elementAt(0) }
+        .asSequence()
+        .mapNotNull { findSimilarWords(it.value) }
+        .first()
+    return removeDifference(s, s1)
+}
+
+private fun findSimilarWords(input: List<String>): Pair<String, String>? {
+    input.forEach { first ->
+        input.forEach { second ->
+            if (checkWord(first, second)) {
+                return Pair(first, second)
+            }
+        }
+    }
+    return null
+}
+
+private fun checkWord(first: String, second: String): Boolean {
+    val firstChars = first.toCharArray()
+    val secondChars = second.toCharArray()
+    var differenceCount = 0
+    if (firstChars.size == secondChars.size) {
+        firstChars.forEachIndexed { index, c ->
+            if (c != secondChars[index]) {
+                differenceCount += 1
+            }
+        }
+    }
+    return (differenceCount == 1)
+}
+
+private fun removeDifference(first: String, second: String): String {
+    val firstChars = first.toCharArray()
+    val secondChars = second.toCharArray()
+    var word = ""
+    firstChars.forEachIndexed { index, c ->
+        if (c == secondChars[index]) {
+            word += c
+        }
+    }
+    return word
+}

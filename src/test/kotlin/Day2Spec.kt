@@ -15,17 +15,21 @@ class Day2Spec : StringSpec({
         day2FirstStar(input) shouldBe 7105
     }
 
-//    "second star should return 10" {
-//        val input = listOf(+3, +3, +4, -2, -4)
-//        day1SecondStar(input) shouldBe 10
-//    }
-//
-//    "second star should return 5" {
-//        val input = listOf(-6, +3, +8, +5, -6)
-//        day1SecondStar(input) shouldBe 5
-//    }
-//    "second star should return 14" {
-//        val input = listOf(+7, +7, -2, -7, -4)
-//        day1SecondStar(input) shouldBe 14
-//    }
+    "second star should return fgij" {
+        val input = listOf(
+            "abcde",
+            "fghij",
+            "klmno",
+            "pqrst",
+            "fguij",
+            "axcye",
+            "wvxyz"
+        )
+        day2SecondStar(input) shouldBe "fgij"
+    }
+
+    "second star should return omlvgdokxfncvqyersasjziup" {
+        val input = Files.readAllLines(Paths.get("src/main/resources/day2.txt"))
+        day2SecondStar(input) shouldBe "omlvgdokxfncvqyersasjziup"
+    }
 })
